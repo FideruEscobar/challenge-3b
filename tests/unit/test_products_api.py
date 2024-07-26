@@ -15,6 +15,19 @@ def inventory_fixture():
     return inventory
 
 @pytest.mark.django_db
+def test_get_all_product(api_client, inventory_fixture) -> None:
+
+
+    response_create = api_client.get("/api/products", format="json")
+    assert response_create.status_code == 200
+    assert 'product' in response_create.data[0]
+    assert 'stock' in response_create.data[0]
+    assert 'name' in response_create.data[0]['product']
+    assert response_create.data[0]['product']['name'] == inventory_fixture.product.name
+    assert response_create.data[0]['product']['sku'] == inventory_fixture.product.sku
+    assert response_create.data[0]['stock'] == inventory_fixture.stock
+
+@pytest.mark.django_db
 def test_create_product(api_client) -> None:
 
     # Test the create Product API

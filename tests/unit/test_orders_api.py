@@ -58,8 +58,9 @@ def test_create_orders_products(
     assert 'order_number' in response_create.data[0]['order']
     assert 'order_number' in response_create.data[1]['order']
     assert response_create.data[0]["product"]["id"] == payload["products"][0]["product_id"]
+    assert response_create.data[0]["product"]["sku"] == inventory_fixture.product.sku
     assert response_create.data[1]["product"]["id"] == payload["products"][1]["product_id"]
-    
+    assert response_create.data[1]["product"]["sku"] == inventory_fixture2.product.sku
 
 @pytest.mark.django_db
 def test_create_orders_products_bad_request(api_client, inventory_fixture) -> None:

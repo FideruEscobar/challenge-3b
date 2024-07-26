@@ -25,6 +25,20 @@ def test_update_stock_product(api_client, inventory_fixture)-> None:
     assert response_update.status_code == 200
     assert response_update.data["message"] == "Stock of product update successfully"
 
+
+@pytest.mark.django_db
+def test_update_stock_product_id_not_exist(api_client)-> None:
+
+    payload = {
+        "stock": 100
+    }
+
+    response_update = api_client.patch(f"/api/inventories/product/2", data=payload, format="json")
+
+    assert response_update.status_code == 404
+    assert 'error' in response_update.data
+    assert response_update.data['error'] == 'Inventory of product not found'
+
 @pytest.mark.django_db
 def test_update_stock_bad_request(api_client, inventory_fixture) -> None:
 
