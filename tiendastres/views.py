@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from drf_yasg.utils import swagger_auto_schema
 from .models import Inventory, Order, Product, OrderProduct
 from .serializers import (
     InventorySerializer,
@@ -12,6 +13,9 @@ from .serializers import (
 
 class ProductApiView(APIView):
 
+    @swagger_auto_schema(
+            operation_id='Get all Products',
+    )
     def get(self, request, *args, **kwargs):
 
         products = Inventory.objects.all()
@@ -20,6 +24,12 @@ class ProductApiView(APIView):
 
         return Response(serializer.data , status=status.HTTP_200_OK)
     
+
+    @swagger_auto_schema(
+            request_body=InventorySerializer(many=True), 
+            operation_id='Create a Product',
+            responses={201: InventorySerializer(many=True)}
+    )
     def post(self, request, *args, **kwargs):
 
         serializer = InventorySerializer(data=request.data)
@@ -32,6 +42,11 @@ class ProductApiView(APIView):
 
 class InventoryApiView(APIView):
     
+    @swagger_auto_schema(
+            request_body=UpdateInventorySerializer(many=True), 
+            operation_id='Update stock of product',
+            responses={200: 'Stock of product update successfully'}
+    )
     def patch(self, request, product_id):
 
         serializer = UpdateInventorySerializer(data=request.data)
@@ -51,6 +66,11 @@ class InventoryApiView(APIView):
 
 class OrdersApiView(APIView):
     
+    @swagger_auto_schema(
+            request_body=OrderProductPurchaseSerializer(many=True), 
+            operation_id='Create a Order products',
+            responses={201: OrderProductSerializer(many=True)}
+    )
     def post(self, request, *args, **kwargs):
 
         # This endpoint create a new purchase order and
