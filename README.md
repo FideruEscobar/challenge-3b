@@ -27,8 +27,10 @@ esta en la Documentacion de swagger
 
 Si al detener el Docker y se quiere volver a correr el proyecto
 seguramente va mandar un error de que el nombre ya existe 
-entonces solo basta con borrar el contendor y correr nuevamente
+entonces solo basta con borrar el contendor con  
 con `docker rm -f challenge_3b`
+y correr nuevamente con
+`docker run -d --name challenge_3b -p 8000:8000 challenge_3b`
 
 ## Ejecutar las pruebas unitarias
 -Correr las pruebas unitarias
