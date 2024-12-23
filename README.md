@@ -8,6 +8,9 @@ y como Gestor de Base de datos usa sqllite, por lo tanto
 no se necesita conectarse a una base de datos y tampoco
 se necesita de algun tipo de aunthenticacion.
 
+Esta APP permite descontar productos de inventario y generar un numero
+de Orden, el proceso es basico pero permite ver como codifico en Python
+
 La API base es `localhost:8000/api/` esto tambien
 esta en la Documentacion de swagger
 
